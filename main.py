@@ -4,7 +4,7 @@
 import urllib
 import urllib.request
 import json
-
+from math import trunc
 api_key = 'c0a57aa83b4192bf30b977a0f83cb631'
 
 #api.openweathermap.org/data/2.5/weather?zip={zip code},{country code}
@@ -30,18 +30,21 @@ def weather_search(user_zip):
     json_obj = urllib.request.urlopen(api_call)
     mydata = json.load(json_obj)
 
-   # print(json_obj.read())
-    print(mydata)
 
-    print('\n')
 
+    print('The current temperature is: ' + str(kelvin_converter(mydata['main']['temp'])))
     print(mydata['name'])
-    print(mydata['weather'])
+    print('The sky conditions: ' + mydata['weather'][0]['main'])
+    print(mydata['main'])
     print(mydata['sys'])
     print(mydata['wind'])
 
+def kelvin_converter(kelvin):
+
+    f = (kelvin - 273.15) * 9 / 5 + 32
+
+    return trunc(f)
 
 
-
-myzip = 47401
+myzip = 47250
 weather_search(myzip)
